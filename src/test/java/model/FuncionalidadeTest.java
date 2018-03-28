@@ -38,7 +38,7 @@ public class FuncionalidadeTest {
         cen.addStep(step);
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
 
-        System.out.println("-------------------LISTANDO TUDO-------------------");
+        System.out.println("-------------------LISTANDO TUDO-------------------");//Verificar aqui
         System.out.print("Feature: "+func.getNome()+" "+df.format(func.getInicio())+"\n\t\tCategorias: ");
         for(Categoria cat : func.getListCategoria()){
             System.out.print("\t\t"+cat.getNome());
