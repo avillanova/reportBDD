@@ -1,5 +1,7 @@
 package model;
 
+import report.Report;
+
 import java.util.*;
 
 public class Funcionalidade extends Test{
@@ -9,6 +11,7 @@ public class Funcionalidade extends Test{
     public Funcionalidade(String funcionalidade){
         setNome( funcionalidade);
         setInicio( new Date(System.currentTimeMillis()));
+        Report.addFuncionalidade( this );
     }
 
 

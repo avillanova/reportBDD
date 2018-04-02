@@ -1,10 +1,10 @@
 package model;
 
-import com.sun.org.apache.xpath.internal.functions.FunctionOneArg;
-import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import report.Report;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,11 +13,15 @@ import java.util.Date;
 public class FuncionalidadeTest {
     static Report report;
 
-    @Test
-    public void Test() throws InterruptedException {
-        report = new Report();
+    @Before
+    public void GerarRelatorio() throws IOException {
+        report = new Report("./src/main/resources/new.html");
+    }
 
-//FUNCIONALIDADE 1
+    @Test
+    public void Test() throws InterruptedException, IOException {
+
+        //FUNCIONALIDADE 1
         Funcionalidade func = new Funcionalidade("Funcionalidade 1");
         func.addCategorias("Test1", "Test2", "Test2", "Test4");
         func.setStatus( LogStatus.FAIL );
@@ -55,10 +59,12 @@ public class FuncionalidadeTest {
                 cen.setFim( new Date(System.currentTimeMillis()) );
             func.addCenario(cen);
         func.setFim( new Date(System.currentTimeMillis()) );
-        report.addFuncionalidade( func );
+        //report.addFuncionalidade( func );
+
+        report.flush();
     }
 
-    @Test
+
     public void Test2() throws InterruptedException {
         //FUNCIONALIDADE 2
         Funcionalidade func = new Funcionalidade("Funcionalidade 2");
@@ -98,10 +104,8 @@ public class FuncionalidadeTest {
                 cen.setFim( new Date(System.currentTimeMillis()) );
             func.addCenario(cen);
         func.setFim( new Date(System.currentTimeMillis()) );
-        report.addFuncionalidade( func );
     }
 
-    @After
     public void Print(){
         //PRINTS
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
@@ -110,14 +114,14 @@ public class FuncionalidadeTest {
 
         System.out.println("-------------------LISTANDO TUDO-------------------");//Verificar aqui
         System.out.println("CONFIGURAÇÕES" );
-        System.out.println("\tHost Name: "+report.getHostName() );
-        System.out.println("\tUser Name: "+report.getUserName());
-        System.out.println("\tOS: "+report.getOS());
-        System.out.println("\tHost Date: "+dc.format( report.getDate()));
-        System.out.println("\tBrowser: "+report.getBrowser() );
+   //     System.out.println("\tHost Name: "+report.getHostName() );
+   //     System.out.println("\tUser Name: "+report.getUserName());
+   //     System.out.println("\tOS: "+report.getOS());
+   //     System.out.println("\tHost Date: "+dc.format( report.getDate()));
+   //     System.out.println("\tBrowser: "+report.getBrowser() );
         System.out.println("\tVersion: "+report.getVersion() );
 
-        for(Funcionalidade f : report.getListFuncionalidade()){
+        for(Funcionalidade f : ReportLog.getListFuncionalidade()){
             System.out.print("Feature: "+f.getNome()+" "
                     +df.format(f.getInicio())+" - "
                     +df.format( f.getFim() )+" - "
