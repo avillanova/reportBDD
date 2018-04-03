@@ -27,7 +27,7 @@
             <a href="#!" onclick="_updateCurrentStage(-1)" class="dashboard-view"><i class="mdi-action-track-changes"></i>Análise</a>
         </li>
     </ul>
-    <span class="report-name"></span> <span class="report-headline">$reportName</span>
+    <span class="report-name"></span> <span class="report-headline">$reportDescription</span>
     <ul class="right hide-on-med-and-down nav-right">
         <li class="theme-selector" alt="Click to toggle dark theme. To enable by default, use js configuration $(&quot;body&quot;).addClass(&quot;dark&quot;);" title="Click to toggle dark theme. To enable by default, use js configuration $(&quot;body&quot;).addClass(&quot;dark&quot;);">
             <i class="mdi-hardware-desktop-windows"></i>
@@ -51,13 +51,13 @@
             <div class="col l2 m4 s6">
                 <div class="card suite-total-tests">
                     <span class="panel-name">Total Features</span>
-                    <span class="total-tests"> <span class="panel-lead">$numeroTestes</span> </span>
+                    <span class="total-tests"> <span class="panel-lead">$featureNumber</span> </span>
                 </div>
             </div>
             <div class="col l2 m4 s6">
                 <div class="card suite-total-steps">
                     <span class="panel-name">Total Scenarios</span>
-                    <span class="total-steps"> <span class="panel-lead">$numeroCenarios</span> </span>
+                    <span class="total-steps"> <span class="panel-lead">$cenarioNumber</span> </span>
                 </div>
             </div>
             <div class="col s12 m6 l4 fh">
@@ -69,13 +69,13 @@
             <div class="col l2 m4 s6 suite-start-time">
                 <div class="card accent green-accent">
                     <span class="panel-name">Start</span>
-                    <span class="panel-lead suite-started-time">$dateCreation</span>
+                    <span class="panel-lead suite-started-time">$dateStart</span>
                 </div>
             </div>
             <div class="col l2 m4 s6 suite-end-time">
                 <div class="card accent pink-accent">
                     <span class="panel-name">End</span>
-                    <span class="panel-lead suite-ended-time">$dateFinish</span>
+                    <span class="panel-lead suite-ended-time">$dateEnd</span>
                 </div>
             </div>
         </div>
@@ -140,7 +140,7 @@
                         <span class="weight-light"><span class="s-pass-count weight-normal">$totalCenariosPassed</span> step(s) passed </span>
                     </div>
                     <div>
-                        <span class="weight-light"><span class="s-fail-count weight-normal">$totalCenariosfailed</span> step(s) failed,
+                        <span class="weight-light"><span class="s-fail-count weight-normal">$totalCenariosFailed</span> step(s) failed,
                         <span class="s-others-count weight-normal">$totalCenariosOthers</span> others</span>
                     </div>
                 </div>
@@ -191,7 +191,7 @@
         <div class="category-summary-view">
             <div class="col l4 m6 s12">
                 <div class="card-panel">
-                    <span class="label info outline right">Categories</span>
+                    <span class="label info outline right">Categorias</span>
                     <table>
                         <thead>
                         <tr>
@@ -201,7 +201,7 @@
                         <tbody>
                         <tr>
                             <td>
-                                $categories
+                                $categoriesList
                             </td>
                         </tr>
                         </tbody>

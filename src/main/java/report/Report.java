@@ -61,6 +61,29 @@ public class Report extends ReportLog{
     }
 
     public void flush() throws IOException {
+        /*Statics
+        $reportName
+        $reportDescription
+        $reportDate
+        $version
+        $featureNumber
+        $cenarioNumber
+        $duracaoTotal
+        $dateStart
+        $dateEnd
+        $totalFeaturesPassed
+        $totalFeaturesFailed
+        $totalFeaturesOthers
+        $totalCenariosPassed
+        $totalCenariosFailed
+        $totalCenariosOthers
+        $passPercent
+        $userName
+        $OS
+        $browser
+        $hostName
+        $categoriesList (apenas tag)
+        */
         dateFinish = new Date();
         String duracao = getDuracao( dateFinish.getTime() - dateCreation.getTime() );
         htmlString = htmlString.replace("$duracaoTotal", duracao);

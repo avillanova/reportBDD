@@ -9,8 +9,5 @@
         <module name="reportBDD" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="reportBDD" target="1.6" />
-    </bytecodeTargetLevel>
   </component>
 </project>
