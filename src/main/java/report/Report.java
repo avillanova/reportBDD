@@ -33,6 +33,7 @@ public class Report extends ReportLog{
         browser    = "Chrome"    ;
         dateCreation       = new Date( );
         version    = "1.0-SNAPSHOT" ;
+        String sprint = "Sprint 15";
         try {
             HostName   = InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException e) {
@@ -41,8 +42,8 @@ public class Report extends ReportLog{
 
         htmlTemplateFile = new File("./src/main/java/report/template.html");
         htmlString = FileUtils.readFileToString(htmlTemplateFile);
-        htmlString = htmlString.replace("$title", reportName);
         htmlString = htmlString.replace("$reportName", reportName);
+        htmlString = htmlString.replace("$reportDescription", sprint);
         htmlString = htmlString.replace("$reportDate", df.format(dateCreation));
         htmlString = htmlString.replace("$version", version);
 
@@ -62,15 +63,11 @@ public class Report extends ReportLog{
 
     public void flush() throws IOException {
         /*Statics
-        $reportName
-        $reportDescription
-        $reportDate
-        $version
         $featureNumber
         $cenarioNumber
         $duracaoTotal
-        $dateStart
-        $dateEnd
+        $featureStart //dateStart
+        $featureEnd     //dateEnd
         $totalFeaturesPassed
         $totalFeaturesFailed
         $totalFeaturesOthers
@@ -83,6 +80,28 @@ public class Report extends ReportLog{
         $browser
         $hostName
         $categoriesList (apenas tag)
+        $categories[i] /para dropdown fazer loop no li
+        $featureName li loop
+        $featureStatus
+        $featureDescription
+        $featureCategory
+        $cenarioName
+        $cenarioDescription
+        $stepTime
+        $stepName
+
+        $categoriName (fazer loop)
+                        <div class="category-status-counts">
+                            <span class="fail label dot">Fail: $failCategoryCount</span>
+                            <span class="pass label dot">Pass> $passCategoryCount</span>
+                            <span class="other label dot">Pass> $otherCategoryCount</span>
+                         </div>
+        $totalPass
+        $totalFail
+        $totalOther
+        $featureStart
+        $featureName
+        $featureStatus
         */
         dateFinish = new Date();
         String duracao = getDuracao( dateFinish.getTime() - dateCreation.getTime() );
