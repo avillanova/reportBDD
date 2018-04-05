@@ -1,5 +1,6 @@
 package model;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import report.Report;
@@ -23,22 +24,26 @@ public class FuncionalidadeTest {
 
         //FUNCIONALIDADE 1
         Funcionalidade func = new Funcionalidade("Funcionalidade 1");
+        func.setDescricao( "Testando o relatorio" );
         func.addCategorias("Test1", "Test2", "Test2", "Test4");
         func.setStatus( LogStatus.FAIL );
         func.setPrioridade(LogPriority.HIGHEST);
             Cenario cen = new Cenario("Cenario Teste");
             cen.setStatus( LogStatus.PASS );
-            cen.addCategorias("Cenario1");
+            cen.addCategorias("Cenario1", "Test1");
             cen.setPrioridade(LogPriority.HIGHEST);
                 Step step = new Step("Step 1");
+                step.setStatus( LogStatus.PASS );
                 cen.addStep(step);
                 step = new Step("Step 2");
+                step.setStatus( LogStatus.PASS );
                 cen.addStep(step);
                 step = new Step("Step 3");
+                step.setStatus( LogStatus.PASS );
                 cen.addStep(step);
                 step = new Step("Step 4");
+                step.setStatus( LogStatus.PASS );
                 cen.addStep(step);
-                Thread.sleep( 1200 );
                 cen.setFim( new Date(System.currentTimeMillis()) );
             func.addCenario(cen);
 
@@ -47,43 +52,48 @@ public class FuncionalidadeTest {
             cen.setPrioridade(LogPriority.LOW);
             cen.addCategorias("Cenario Categoria", "Cenario 2");
                 step = new Step("Outro Step 1");
-                Thread.sleep( 1500 );
+                step.setStatus( LogStatus.PASS );
+                //Thread.sleep( 1500 );
                 cen.addStep(step);
                 step = new Step("Outro Step 2");
+                step.setStatus( LogStatus.PASS );
                 cen.addStep(step);
                 step = new Step("Outro Step 3");
+                step.setStatus( LogStatus.PASS );
                 cen.addStep(step);
                 step = new Step("Outro Step 4");
+                step.setStatus( LogStatus.FAIL );
                 cen.addStep(step);
-                Thread.sleep( 60000 );
+               // Thread.sleep( 60000 );
                 cen.setFim( new Date(System.currentTimeMillis()) );
             func.addCenario(cen);
         func.setFim( new Date(System.currentTimeMillis()) );
-        //report.addFuncionalidade( func );
 
-        report.flush();
     }
 
-
+    @Test
     public void Test2() throws InterruptedException {
         //FUNCIONALIDADE 2
         Funcionalidade func = new Funcionalidade("Funcionalidade 2");
-        func.addCategorias("Test1", "Test2", "Test2", "Test4");
+        func.addCategorias("Test1", "Test2", "Test2", "Func2");
         func.setStatus( LogStatus.FAIL );
         func.setPrioridade(LogPriority.HIGHEST);
-            Cenario cen = new Cenario("Cenario Teste");
+            Cenario cen = new Cenario("Cenario Teste Func 2");
             cen.setStatus( LogStatus.PASS );
             cen.addCategorias("Cenario1");
             cen.setPrioridade(LogPriority.HIGHEST);
                 Step step = new Step("Step 1");
+                step.setStatus( LogStatus.PASS );
                 cen.addStep(step);
                 step = new Step("Step 2");
+        step.setStatus( LogStatus.PASS );
                 cen.addStep(step);
                 step = new Step("Step 3");
+        step.setStatus( LogStatus.PASS );
                 cen.addStep(step);
                 step = new Step("Step 4");
+        step.setStatus( LogStatus.PASS );
                 cen.addStep(step);
-                Thread.sleep( 1200 );
             cen.setFim( new Date(System.currentTimeMillis()) );
             func.addCenario(cen);
 
@@ -92,18 +102,27 @@ public class FuncionalidadeTest {
             cen.setPrioridade(LogPriority.LOW);
             cen.addCategorias("Cenario Categoria", "Cenario 2");
                 step = new Step("Outro Step 1");
-                Thread.sleep( 1500 );
+        step.setStatus( LogStatus.PASS );
+
                 cen.addStep(step);
                 step = new Step("Outro Step 2");
+        step.setStatus( LogStatus.PASS );
                 cen.addStep(step);
                 step = new Step("Outro Step 3");
+        step.setStatus( LogStatus.PASS );
                 cen.addStep(step);
                 step = new Step("Outro Step 4");
+        step.setStatus( LogStatus.FAIL );
                 cen.addStep(step);
-                Thread.sleep( 60000 );
                 cen.setFim( new Date(System.currentTimeMillis()) );
             func.addCenario(cen);
         func.setFim( new Date(System.currentTimeMillis()) );
+    }
+
+
+    @After
+    public void after() throws IOException {
+        report.flush();
     }
 
     public void Print(){

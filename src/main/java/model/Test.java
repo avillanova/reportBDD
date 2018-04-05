@@ -9,11 +9,12 @@ import java.util.concurrent.TimeUnit;
 
 public class Test {
     private String nome;
-    private String status;
+    private LogStatus status;
     private Date inicio;
     private Date fim;
     private long duracao;
     private String prioridade;
+    private String descricao;
     private List<Categoria> listCategoria = new ArrayList<Categoria>();
 
 
@@ -38,12 +39,12 @@ public class Test {
         this.nome = nome;
     }
 
-    public String getStatus() {
+    public LogStatus getStatus() {
         return status;
     }
 
     public void setStatus(LogStatus status) {
-        this.status = status.toString();
+        this.status = status;
     }
 
     public Date getInicio() {
@@ -84,5 +85,18 @@ public class Test {
 
     public void setPrioridade(LogPriority prioridade) {
         this.prioridade = prioridade.toString();
+    }
+
+    public String getDescricao() {
+        if(descricao == null){
+            return "";
+        }
+        else {
+            return descricao;
+        }
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }

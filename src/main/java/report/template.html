@@ -15,10 +15,11 @@
 <!-- nav -->
 <nav>
     <div class="logo-container blue darken-2">
-        <a class="logo-content" href="http://extentreports.relevantcodes.com">
+        <a class="logo-content" href="#">
             <span>$reportName</span>
         </a>
-        <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only"><i class="mdi-navigation-apps"></i></a>
+        <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only">
+            <i class="mdi-navigation-apps">        </i></a>
     </div>
     <ul id="slide-out" class="side-nav fixed hide-on-med-and-down">
         <li class="analysis waves-effect"><a href="#!" class="test-view" onclick="_updateCurrentStage(0)"><i class="mdi-action-dashboard"></i>Detalhes dos testes</a></li>
@@ -46,7 +47,7 @@
 <div class="container">
 
     <!-- dashboard -->
-    <div id="dashboard-view" class="row">
+    <div id="dashboard-view" class="row hide">
         <div class="time-totals">
             <div class="col l2 m4 s6">
                 <div class="card suite-total-tests">
@@ -137,10 +138,10 @@
                                 <ul class="doughnut-legend right"></ul>
                     </div>
                     <div>
-                        <span class="weight-light"><span class="s-pass-count weight-normal">$totalCenariosPassed</span> step(s) passed </span>
+                        <span class="weight-light"><span class="s-pass-count weight-normal">$totalCenariosPassed</span> scenario(s) passed </span>
                     </div>
                     <div>
-                        <span class="weight-light"><span class="s-fail-count weight-normal">$totalCenariosFailed</span> step(s) failed,
+                        <span class="weight-light"><span class="s-fail-count weight-normal">$totalCenariosFailed</span> scenario(s) failed,
                         <span class="s-others-count weight-normal">$totalCenariosOthers</span> others</span>
                     </div>
                 </div>
@@ -199,11 +200,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>
-                                $categoriesList
-                            </td>
-                        </tr>
+                            $categoriesList
                         </tbody>
                     </table>
                 </div>
@@ -237,7 +234,7 @@
                             <i class="mdi-maps-local-offer"></i>
                         </a>
                         <ul id="category-toggle" class="dropdown-content">
-                            <li class="$categories[i]"><a href="#!">$categories[i]</a></li>
+                            $categories[i]
                             <li class="divider"></li>
                             <li class="clear"><a href="#!">Clear Filters</a></li>
                         </ul>
@@ -286,84 +283,17 @@
                 <div class="card-panel no-padding-h no-padding-v no-margin-v">
                     <div class="wrapper">
                         <ul id="test-collection" class="test-collection">
-                            <li class="collection-item test displayed fail hasChildren category-assigned parent high active">
-                                <div class="test-head">
-                                    <span class="test-name">$featureName </span>
-                                    <span class="test-status label right outline capitalize $featureStatus">$featureStatus</span>
-                                </div>
-                                <div class="test-body">
-                                    <div class="test-info">
-                                        <span title="Test started time" alt="Test started time" class="test-started-time label green lighten-1 text-white">$featureStartTime</span>
-                                        <span title="Test ended time" alt="Test ended time" class="test-ended-time label red lighten-1 text-white">$featureEndTime</span>
-                                        <span title="Time taken to finish" alt="Time taken to finish" class="test-time-taken label blue-grey lighten-3 text-white">$featureDuration</span>
-                                    </div>
-                                    <div class="test-desc"><div class="test-node-desc">$featureDescription</div></div>
-                                    <div class="test-attributes">
-                                        <div class="categories">
-                                            <span class="category text-white">$featureCategory</span>
-                                        </div>
-                                    </div>
-                                    <div class="test-steps">
-                                        <table class="bordered table-results" style="display: none;">
-                                            <thead>
-                                            <tr>
-                                                <th>Status</th>
-                                                <th>Timestamp</th>
-                                                <th>Details</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                        <ul class="collapsible node-list" data-collapsible="accordion">
-                                            <li class="displayed fail node-1x category-assigned $featureCategories">
-                                                <div class="collapsible-header test-node fail category-assigned  $featureCategories">
-                                                    <div class="right test-info">
-                                                        <span title="Test started time" alt="Test started time" class="test-started-time label green lighten-2 text-white">$cenarioStart</span>
-                                                        <span title="Test ended time" alt="Test ended time" class="test-ended-time label red lighten-2 text-white">$cenarioEnd</span>
-                                                        <span title="Time taken to finish" alt="Time taken to finish" class="test-time-taken label blue-grey lighten-2 text-white">$cenarioDuration</span>
-                                                        <span class="test-status label outline capitalize $cenarioStatus">$cenarioStatus</span>
-                                                    </div>
-                                                    <div class="test-node-name">$cenarioName</div>
-
-                                                    <div class="test-node-desc">$cenarioDescription</div>
-                                                </div>
-                                                <div class="collapsible-body" style="">
-                                                    <div class="test-steps">
-                                                        <table class="bordered table-results">
-                                                            <thead>
-                                                            <tr>
-                                                                <th>Status</th>
-                                                                <th>Timestamp</th>
-                                                                <th>Details</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            <tr>
-                                                                <td class="status $stepStatus" title="$stepStatus" alt="$stepStatus"><i class="mdi-action-check-circle"></i></td>
-                                                                <td class="timestamp">$stepTime</td>
-                                                                <td class="step-details">$stepName</td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
+                            $testes
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-
         <div id="test-details-wrapper" class="col _addedCell2" style="height: 612px; width: 1259px;">
             <div class="contents" style="height: 597px;">
                 <div class="card-panel details-view">
-                    <h5 class="details-name"></h5>
+                    <h5 class="details-name">Detalhes</h5>
                     <div class="step-filters right">
                         <span class="btn-floating btn-small waves-effect waves-light blue" status="info" alt="info" title="info"><i class="mdi-action-info-outline"></i></span>
                         <span class="btn-floating btn-small waves-effect waves-light green" status="pass" alt="pass" title="pass"><i class="mdi-action-check-circle"></i></span>
@@ -372,8 +302,6 @@
                         <span class="btn-floating btn-small waves-effect waves-light grey darken-2" status="clear-step-filter" alt="Clear filters" title="Clear filters"><i class="mdi-content-clear"></i></span>
                     </div>
                     <div class="details-container">
-                        <div class="test-body">
-                        </div>
                     </div>
                 </div>
             </div>
@@ -386,7 +314,7 @@
         <div class="col _addedCell1" style="resize: horizontal;">
             <div class="contents">
                 <div class="card-panel heading">
-                    <h5>Categories</h5>
+                    <h5>Categorias</h5>
                 </div>
                 <div class="card-panel filters">
                     <div class="search" alt="Search tests" title="Search tests">
@@ -401,42 +329,7 @@
                 <div class="card-panel no-padding-h no-padding-v">
                     <div class="wrapper">
                         <ul id="cat-collection" class="cat-collection">
-                            <li class="category-item displayed active">
-                                <div class="cat-head">
-                                    <span class="category-name">$Categories</span>
-                                </div>
-                                <!-- se tiver fail, pass ou other-->
-                                <div class="category-status-counts">
-                                    <span class="fail label dot">Fail: $failCategoryCount</span>
-                                </div>
-                                <div class="cat-body">
-                                    <div class="category-status-counts">
-                                        <div class="button-group">
-                                            <a href="#!" class="pass label filter">Pass <span class="icon">$totalPass</span></a>
-                                            <a href="#!" class="fail label filter">Fail <span class="icon">$totalFail</span></a>
-                                            <a href="#!" class="other label filter">Others <span class="icon">$totalOther</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="cat-tests">
-                                        <table class="bordered">
-                                            <thead>
-                                            <tr>
-                                                <th>RunDate</th>
-                                                <th>Test Name</th>
-                                                <th>Status</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr class="fail">
-                                                <td>$featureStart</td>
-                                                <td><span class="category-link linked">$featureName</span></td>
-                                                <td><div class="status label capitalize fail">$featureStatus</div></td>
-                                            </tr>
-                                            </tbody><tbody>
-                                        </tbody></table>
-                                    </div>
-                                </div>
-                            </li>
+                            $AllCat
                         </ul>
                     </div>
                 </div>

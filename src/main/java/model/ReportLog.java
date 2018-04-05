@@ -104,4 +104,23 @@ public class ReportLog {
         }
         return num;
     }
+
+    protected List<Categoria> getCategoryList(){
+        List<Categoria> categorias = new ArrayList<Categoria>();
+        for(Funcionalidade f : listFuncionalidade){
+           for(Categoria c : f.getListCategoria()){
+               if(!categorias.contains(c)){
+                   categorias.add( c );
+               }
+           }
+           for(Cenario c : f.getCenarios()){
+               for(Categoria cat : c.getListCategoria()){
+                   if(!categorias.contains(cat)){
+                       categorias.add( cat );
+                   }
+               }
+           }
+        }
+        return categorias;
+    }
 }
