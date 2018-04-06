@@ -48,8 +48,8 @@ i.style.opacity=tweenedOpacity}function h(){var a,b,c,d;a=Date.now(),b=a-B,B=a,c
 var currentView = 0;
 
 /* counts */
-var totalTests, passedTests, failedTests, fatalTests, warningTests, errorTests, skippedTests, unknownTests;
-var totalSteps, passedSteps, failedSteps, fatalSteps, warningSteps, errorSteps, infoSteps, skippedSteps, unknownSteps;
+var totalFunc, passedFunc, failedFunc, skippedFunc, unknownFunc;
+var totalCen, passedCen, failedCen, infoCen, skippedCen, unknownCen;
 
 /* global chart instance vars */
 var testChart, stepChart;
@@ -552,15 +552,15 @@ function redrawCharts() {
 		return;
 	}
 
-	testChart.segments[0].value = passedTests;
-	testChart.segments[1].value = failedTests;
-	testChart.segments[5].value = skippedTests;
-	testChart.segments[6].value = unknownTests;
-	stepChart.segments[0].value = passedSteps;
-	stepChart.segments[1].value = infoSteps;
-	stepChart.segments[2].value = failedSteps;
-	stepChart.segments[6].value = skippedSteps;
-	stepChart.segments[7].value = unknownSteps;
+	testChart.segments[0].value = passedFunc;
+	testChart.segments[1].value = failedFunc;
+	testChart.segments[5].value = skippedFunc;
+	testChart.segments[6].value = unknownFunc;
+	stepChart.segments[0].value = passedCen;
+	stepChart.segments[1].value = infoCen;
+	stepChart.segments[2].value = failedCen;
+	stepChart.segments[6].value = skippedCen;
+	stepChart.segments[7].value = unknownCen;
 
 	$('#test-analysis, #step-analysis').html('');
 	$('ul.doughnut-legend').html('');
@@ -575,75 +575,40 @@ function redrawCharts() {
 function refreshData() {
 	var el = $('#test-count-setting');
 
-	totalTests = $('#test-collection .test:not(.hasChildren), #test-collection .test-node').length;
-	passedTests = $('#test-collection .test.displayed .node-list > li.pass.displayed, #test-collection .test.displayed.pass:not(.hasChildren)').length;
-	failedTests = $('#test-collection .test.displayed .node-list > li.fail.displayed, #test-collection .test.displayed.fail:not(.hasChildren)').length;
-	fatalTests = $('#test-collection .test.displayed .node-list > li.fatal.displayed, #test-collection .test.displayed.fatal:not(.hasChildren)').length;
-	warningTests = $('#test-collection .test.displayed .node-list > li.warning.displayed, #test-collection .test.displayed.warning:not(.hasChildren)').length;
-	errorTests = $('#test-collection .test.displayed .node-list > li.error.displayed, #test-collection .test.displayed.error:not(.hasChildren)').length;
-	skippedTests = $('#test-collection .test.displayed .node-list > li.skip.displayed, #test-collection .test.displayed.skip:not(.hasChildren)').length;
-	unknownTests = $('#test-collection .test.displayed .node-list > li.unknown.displayed, #test-collection .test.displayed.unknown:not(.hasChildren)').length;
+	totalFunc = $('.hasChildren').length;
+	passedFunc = $('.hasChildren.pass').length;
+	failedFunc = $('.hasChildren.fail').length;
+	skippedFunc = $('.hasChildren.skip').length;
+	unknownFunc = $('.hasChildren.unknow').length;
 
-	if (el.hasClass('parentWithoutNodes')) {
-		totalTests = $('#test-collection .test.displayed').length;
-		passedTests = $('#test-collection .test.displayed.pass').length;
-		failedTests = $('#test-collection .test.displayed.fail').length;
-		fatalTests = $('#test-collection .test.displayed.fatal').length;
-		warningTests = $('#test-collection .test.displayed.warning').length;
-		errorTests = $('#test-collection .test.displayed.error').length;
-		skippedTests = $('#test-collection .test.displayed.skip').length;
-		unknownTests = $('#test-collection .test.displayed.unknown').length;
-	}
-	else if (el.hasClass('childNodes')) {
-		totalTests = $('#test-collection .test-node').length;
-		passedTests = $('#test-collection .test.displayed .node-list > li.pass.displayed').length;
-		failedTests = $('#test-collection .test.displayed .node-list > li.fail.displayed').length;
-		fatalTests = $('#test-collection .test.displayed .node-list > li.fatal.displayed').length;
-		warningTests = $('#test-collection .test.displayed .node-list > li.warning.displayed').length;
-		errorTests = $('#test-collection .test.displayed .node-list > li.error.displayed').length;
-		skippedTests = $('#test-collection .test.displayed .node-list > li.skip.displayed').length;
-		unknownTests = $('#test-collection .test.displayed .node-list > li.unknown.displayed').length;
-	}
+	$('.t-pass-count').text(passedFunc);
+	$('.t-fail-count').text(failedFunc);
+	$('.t-skipped-count').text(skippedFunc);
+	$('.t-others-count').text( skippedFunc + unknownFunc);
 
-	$('.t-pass-count').text(passedTests);
-	$('.t-fail-count').text(failedTests + fatalTests);
-	$('.t-warning-count').text(warningTests);
-	$('.t-fatal-count').text(fatalTests);
-	$('.t-error-count').text(errorTests);
-	$('.t-skipped-count').text(skippedTests);
-	$('.t-others-count').text(warningTests + errorTests + skippedTests + unknownTests);
-
-	var percentage = Math.round((passedTests * 100) / (passedTests + failedTests + fatalTests + warningTests + errorTests + unknownTests + skippedTests)) + '%';
+	var percentage = Math.round((passedFunc * 100) / (passedFunc + failedFunc + unknownFunc + skippedFunc)) + '%';
 	$('.pass-percentage.panel-lead').text(percentage);
 	$('#dashboard-view .determinate').attr('style', 'width:' + percentage);
 
-	totalSteps = $('#test-collection .test.displayed > .test-body > .test-steps > table td.status, #test-collection .test.displayed .node-list > li.displayed td.status').length;
-	passedSteps = $('#test-collection .test.displayed > .test-body > .test-steps > table td.status.pass, #test-collection .test.displayed .node-list > li.displayed td.status.pass').length;
-	failedSteps = $('#test-collection .test.displayed > .test-body > .test-steps > table td.status.fail, #test-collection .test.displayed .node-list > li.displayed td.status.fail').length;
-	fatalSteps = $('#test-collection .test.displayed > .test-body > .test-steps > table td.status.fatal, #test-collection .test.displayed .node-list > li.displayed td.status.fatal').length;
-	warningSteps = $('#test-collection .test.displayed > .test-body > .test-steps > table td.status.warning, #test-collection .test.displayed .node-list > li.displayed td.status.warning').length;
-	errorSteps = $('#test-collection .test.displayed > .test-body > .test-steps > table td.status.error, #test-collection .test.displayed .node-list > li.displayed td.status.error').length;
-	infoSteps = $('#test-collection .test.displayed > .test-body > .test-steps > table td.status.info, #test-collection .test.displayed .node-list > li.displayed td.status.info').length;
-	skippedSteps = $('#test-collection .test.displayed > .test-body > .test-steps > table td.status.skip, #test-collection .test.displayed .node-list > li.displayed td.status.skip').length;
-	unknownSteps = $('#test-collection .test.displayed > .test-body > .test-steps > table td.status.unknown, #test-collection .test.displayed .node-list > li.displayed td.status.unknown').length;
+	totalCen = $('#test-collection > li.collection-item.test.displayed.hasChildren > div.test-body > ul > li.displayed.node-1x').length;
+	passedCen = $('#test-collection > li.collection-item.test.displayed.hasChildren > div.test-body > ul > li.displayed.pass.node-1x').length;
+	failedCen = $('#test-collection > li.collection-item.test.displayed.hasChildren > div.test-body > ul > li.displayed.node-1x.fail').length;
+	infoCen = $('#test-collection > li.collection-item.test.displayed.hasChildren > div.test-body > ul > li.displayed.node-1x.info').length;
+	skippedCen = $('#test-collection > li.collection-item.test.displayed.hasChildren > div.test-body > ul > li.displayed.node-1x.skip').length;
+	unknownCen = $('#test-collection > li.collection-item.test.displayed.hasChildren > div.test-body > ul > li.displayed.node-1x.unknown').length;
 
-	if ($('#step-status-filter').hasClass('pass')) { passedSteps = 0; }
-	if ($('#step-status-filter').hasClass('fail')) { failedSteps = 0; }
-	if ($('#step-status-filter').hasClass('fatal')) { fatalSteps = 0; }
-	if ($('#step-status-filter').hasClass('warning')) { warningSteps = 0; }
-	if ($('#step-status-filter').hasClass('error')) { errorSteps = 0; }
+	if ($('#step-status-filter').hasClass('pass')) { passedCen = 0; }
+	if ($('#step-status-filter').hasClass('fail')) { failedCen = 0; }
 	if ($('#step-status-filter').hasClass('info')) { infoSteps = 0; }
-	if ($('#step-status-filter').hasClass('skip')){ skippedSteps = 0; }
-	if ($('#step-status-filter').hasClass('unknown')) { unknownSteps = 0; }
+	if ($('#step-status-filter').hasClass('skip')){ skippedCen = 0; }
+	if ($('#step-status-filter').hasClass('unknown')) { unknownCen = 0; }
 
-	$('.s-pass-count').text(passedSteps);
-	$('.s-fail-count').text(failedSteps + fatalSteps);
-	$('.s-warning-count').text(warningSteps);
-	$('.s-error-count').text(errorSteps);
-	$('.s-skipped-count').text(skippedSteps);
-	$('.s-others-count').text(warningSteps + errorSteps + skippedSteps + unknownSteps + infoSteps);
-	$('.total-tests > .panel-lead').text(totalTests);
-	$('.total-steps > .panel-lead').text(totalSteps);
+	$('.s-pass-count').text(passedCen);
+	$('.s-fail-count').text(failedCen );
+	$('.s-skipped-count').text(skippedCen);
+	$('.s-others-count').text(skippedCen + unknownCen + infoCen);
+	$('.total-tests > .panel-lead').text(totalFunc);
+	$('.total-steps > .panel-lead').text(totalCen);
 }
 
 /* dashboard chart options [DASHBOARD] */
@@ -657,13 +622,10 @@ var options = {
 /* tests view chart [DASHBOARD] */
 function testsChart() {
 	var data = [
-		{ value: passedTests, color: '#00af00', highlight: '#32bf32', label: 'Pass' },
-		{ value: failedTests, color:'#F7464A', highlight: '#FF5A5E', label: 'Fail' },
-		{ value: fatalTests, color:'#8b0000', highlight: '#a23232', label: 'Fatal' },
-		{ value: errorTests, color:'#ff6347', highlight: '#ff826b', label: 'Error' },
-		{ value: warningTests, color: '#FDB45C', highlight: '#FFC870', label: 'Warning' },
-		{ value: skippedTests, color: '#1e90ff', highlight: '#4aa6ff', label: 'Skip' },
-		{ value: unknownTests, color: '#222', highlight: '#444', label: 'Unknown' }
+		{ value: passedFunc, color: '#00af00', highlight: '#32bf32', label: 'Pass' },
+		{ value: failedFunc, color:'#F7464A', highlight: '#FF5A5E', label: 'Fail' },
+		{ value: skippedFunc, color: '#1e90ff', highlight: '#4aa6ff', label: 'Skip' },
+		{ value: unknownFunc, color: '#222', highlight: '#444', label: 'Unknown' }
 	];
 
 	var ctx = $('#test-analysis').get(0).getContext('2d');
@@ -674,14 +636,11 @@ function testsChart() {
 /* steps view chart [DASHBOARD] */
 function stepsChart() {
 	var data = [
-		{ value: passedSteps, color: '#00af00', highlight: '#32bf32', label: 'Pass' },
-		{ value: infoSteps, color: '#46BFBD', highlight: '#5AD3D1', label: 'Info' },
-		{ value: failedSteps, color:'#F7464A', highlight: '#FF5A5E', label: 'Fail' },
-		{ value: fatalSteps, color:'#8b0000', highlight: '#a23232', label: 'Fatal' },
-		{ value: errorSteps, color:'#ff6347', highlight: '#ff826b', label: 'Error' },
-		{ value: warningSteps, color: '#FDB45C', highlight: '#FFC870', label: 'Warning' },
-		{ value: skippedSteps, color: '#1e90ff', highlight: '#4aa6ff', label: 'Skip' },
-		{ value: unknownSteps, color: '#222', highlight: '#444', label: 'Unknown' }
+		{ value: passedCen, color: '#00af00', highlight: '#32bf32', label: 'Pass' },
+		{ value: infoCen, color: '#46BFBD', highlight: '#5AD3D1', label: 'Info' },
+		{ value: failedCen, color:'#F7464A', highlight: '#FF5A5E', label: 'Fail' },
+		{ value: skippedCen, color: '#1e90ff', highlight: '#4aa6ff', label: 'Skip' },
+		{ value: unknownCen, color: '#222', highlight: '#444', label: 'Unknown' }
 	];
 
 	var ctx = $('#step-analysis').get(0).getContext('2d');

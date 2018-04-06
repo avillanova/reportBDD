@@ -22,13 +22,26 @@
             <i class="mdi-navigation-apps">        </i></a>
     </div>
     <ul id="slide-out" class="side-nav fixed hide-on-med-and-down">
-        <li class="analysis waves-effect"><a href="#!" class="test-view" onclick="_updateCurrentStage(0)"><i class="mdi-action-dashboard"></i>Detalhes dos testes</a></li>
-        <li class="analysis waves-effect"><a href="#!" class="categories-view" onclick="_updateCurrentStage(1)"><i class="mdi-maps-local-offer"></i>Categorias</a></li>
         <li class="analysis waves-effect active">
-            <a href="#!" onclick="_updateCurrentStage(-1)" class="dashboard-view"><i class="mdi-action-track-changes"></i>Análise</a>
+            <a href="#!" class="test-view" onclick="_updateCurrentStage(0)">
+                <i class="mdi-action-dashboard"></i>
+                "Detalhes dos testes"
+            </a>
+        </li>
+        <li class="analysis waves-effect">
+            <a href="#!" class="categories-view" onclick="_updateCurrentStage(1)">
+                <i class="mdi-maps-local-offer"></i>
+                "Categorias"
+            </a>
+        </li>
+        <li class="analysis waves-effect">
+            <a href="#!" onclick="_updateCurrentStage(-1)" class="dashboard-view">
+                <i class="mdi-action-track-changes"></i>
+                "Análise"
+            </a>
         </li>
     </ul>
-    <span class="report-name"></span> <span class="report-headline">$reportDescription</span>
+    <span class="report-name"></span><span class="report-headline">$reportDescription</span>
     <ul class="right hide-on-med-and-down nav-right">
         <li class="theme-selector" alt="Click to toggle dark theme. To enable by default, use js configuration $(&quot;body&quot;).addClass(&quot;dark&quot;);" title="Click to toggle dark theme. To enable by default, use js configuration $(&quot;body&quot;).addClass(&quot;dark&quot;);">
             <i class="mdi-hardware-desktop-windows"></i>
@@ -210,7 +223,7 @@
     <!-- /dashboard -->
 
     <!-- features -->
-    <div id="test-view" class="row _addedTable hide">
+    <div id="test-view" class="row _addedTable">
         <div class="col _addedCell1" style="resize: horizontal; height: 612px;">
             <div class="contents" style="height: 597px;">
                 <div class="card-panel heading">
