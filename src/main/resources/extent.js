@@ -554,13 +554,13 @@ function redrawCharts() {
 
 	testChart.segments[0].value = passedFunc;
 	testChart.segments[1].value = failedFunc;
-	testChart.segments[5].value = skippedFunc;
-	testChart.segments[6].value = unknownFunc;
+	testChart.segments[2].value = skippedFunc;
+	testChart.segments[3].value = unknownFunc;
 	stepChart.segments[0].value = passedCen;
 	stepChart.segments[1].value = infoCen;
 	stepChart.segments[2].value = failedCen;
-	stepChart.segments[6].value = skippedCen;
-	stepChart.segments[7].value = unknownCen;
+	stepChart.segments[3].value = skippedCen;
+	stepChart.segments[4].value = unknownCen;
 
 	$('#test-analysis, #step-analysis').html('');
 	$('ul.doughnut-legend').html('');
@@ -579,7 +579,7 @@ function refreshData() {
 	passedFunc = $('.hasChildren.pass').length;
 	failedFunc = $('.hasChildren.fail').length;
 	skippedFunc = $('.hasChildren.skip').length;
-	unknownFunc = $('.hasChildren.unknow').length;
+	unknownFunc = $('.hasChildren.unknown').length;
 
 	$('.t-pass-count').text(passedFunc);
 	$('.t-fail-count').text(failedFunc);
@@ -631,6 +631,7 @@ function testsChart() {
 	var ctx = $('#test-analysis').get(0).getContext('2d');
 	testChart = new Chart(ctx).Doughnut(data, options);
 	drawLegend(testChart, 'test-analysis');
+
 }
 
 /* steps view chart [DASHBOARD] */
@@ -667,6 +668,7 @@ function drawLegend(chart, id) {
 	Chart.helpers.addEvent(legendHolder.firstChild, 'mouseout', function() {
 		chart.draw();
 	});
+
 	$('#' + id).after(legendHolder.firstChild);
 }
 
