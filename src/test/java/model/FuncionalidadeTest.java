@@ -5,11 +5,14 @@ import org.junit.Before;
 import org.junit.Test;
 import report.Report;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import org.apache.commons.codec.binary.Base64;
 
 public class FuncionalidadeTest {
     static Report report;
@@ -76,7 +79,7 @@ public class FuncionalidadeTest {
         //FUNCIONALIDADE 2
         Funcionalidade func = new Funcionalidade("Funcionalidade 2");
         func.addCategorias("Test1", "Test2", "Test2", "Func2");
-        func.setStatus( LogStatus.FAIL );
+        func.setStatus( LogStatus.PASS );
         func.setPrioridade(LogPriority.HIGHEST);
             Cenario cen = new Cenario("Cenario Teste Func 2");
             cen.setStatus( LogStatus.PASS );
@@ -98,7 +101,7 @@ public class FuncionalidadeTest {
             func.addCenario(cen);
 
             cen = new Cenario("Cenario Teste 2");
-            cen.setStatus( LogStatus.FAIL );
+            cen.setStatus( LogStatus.PASS );
             cen.setPrioridade(LogPriority.LOW);
             cen.addCategorias("Cenario Categoria", "Cenario 2");
                 step = new Step("Outro Step 1");
@@ -112,9 +115,16 @@ public class FuncionalidadeTest {
         step.setStatus( LogStatus.PASS );
                 cen.addStep(step);
                 step = new Step("Outro Step 4");
-        step.setStatus( LogStatus.FAIL );
+        step.setStatus( LogStatus.PASS );
                 cen.addStep(step);
-                cen.setFim( new Date(System.currentTimeMillis()) );
+
+
+                step = new Step( "Imagem" );
+        step.setStatus( LogStatus.INFO );
+                step.setImg( pngToBase64( "C:\\Users\\adm\\Downloads\\exemplo.png" ) );
+
+        cen.addStep(step);
+        cen.setFim( new Date(System.currentTimeMillis()) );
             func.addCenario(cen);
         func.setFim( new Date(System.currentTimeMillis()) );
     }
@@ -123,6 +133,29 @@ public class FuncionalidadeTest {
     @After
     public void after() throws IOException {
         report.flush();
+    }
+
+
+
+    public static String pngToBase64(String src){
+        String cod64 = "";
+        try {
+            File file = new File(src);
+            FileInputStream fileInputStreamReader = new FileInputStream(file);
+            byte[] bytes = new byte[(int)file.length()];
+            fileInputStreamReader.read(bytes);
+            cod64 = new String( Base64.encodeBase64(bytes), "UTF-8");
+            // System.out.println( src );
+            //System.out.println( "O CODIGO DA IMAGEM É: "+cod64 );
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return cod64;
+        //return cod64;
     }
 
     public void Print(){

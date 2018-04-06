@@ -471,7 +471,7 @@ $(document).ready(function() {
 
 	/* test count setting */
 		/* init */
-		$('#parentWithoutNodesAndNodes').click();
+		$('#parentWithoutNodes').click();
 	$('#test-count-setting input').click(function() {
 		$('#test-count-setting').removeClass('parentWithoutNodes parentWithoutNodesAndNodes childNodes');
 		$('#test-count-setting').addClass($(this).prop('id'));

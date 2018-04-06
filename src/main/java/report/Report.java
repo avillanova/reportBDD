@@ -1,6 +1,5 @@
 package report;
 
-import com.sun.org.apache.xalan.internal.utils.FeatureManager;
 import model.*;
 import org.apache.commons.io.FileUtils;
 
@@ -25,7 +24,7 @@ public class Report extends ReportLog{
     File htmlTemplateFile;
     String htmlString;
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
+    DateFormat dfs = new SimpleDateFormat("HH:mm:ss");
 
     public Report(String src) throws IOException {
         String sprint = "Sprint 15";
@@ -66,25 +65,11 @@ public class Report extends ReportLog{
     }
 
     public void flush() throws IOException {
-
-      //  htmlString = htmlString.replace( "$featureNumber", getTotalFunc().toString() );
-      //  htmlString = htmlString.replace( "$cenarioNumber", getTotalCen().toString() );
         dateFinish = new Date();
         String duracao = getDuracao( dateFinish.getTime() - dateCreation.getTime() );
         htmlString = htmlString.replace("$duracaoTotal", duracao);
         htmlString = htmlString.replace("$dateStart", df.format( dateCreation ));
         htmlString = htmlString.replace("$dateEnd", df.format( dateFinish ));
-      //  htmlString = htmlString.replace( "$totalFeaturesPassed", getPassedsFeatures().toString() );
-      // htmlString = htmlString.replace( "$totalFeaturesFailed", getFailedFeatures().toString() );
-      //  Integer totalFeatOthers = getTotalFunc()-getPassedsFeatures()-getFailedFeatures();
-      //  htmlString = htmlString.replace( "$totalFeaturesOthers", totalFeatOthers.toString() );
-
-      //  htmlString = htmlString.replace( "$totalCenariosPassed",getPassedsCenarios().toString() );
-      //  htmlString = htmlString.replace( "$totalCenariosFailed",getFailedCenarios().toString() );
-      //  Integer totalCenOthers = getTotalCen()-getPassedsCenarios()-getFailedCenarios();
-      //  htmlString = htmlString.replace( "$totalCenariosOthers",totalCenOthers.toString() );
-      //  Integer totalPassPercent = 100*getPassedsCenarios()/getTotalCen();
-      //  htmlString = htmlString.replace( "$passPercent", totalPassPercent.toString() );
 
 
         String categoryList = "";
@@ -94,7 +79,6 @@ public class Report extends ReportLog{
             categoryDrop = categoryDrop+ "<li class=\""+c.getNome()+"\"><a href=\"#!\">"+c.getNome()+"</a></li>";
         }
         htmlString = htmlString.replace( "$categoriesList", categoryList );
-        //$categories[i] /para dropdown fazer loop no li
         htmlString = htmlString.replace( "$categories[i]", categoryDrop );
         htmlString = htmlString.replace( "$testes", getBaseTest() );
         htmlString = htmlString.replace( "$AllCat", getHtmlAllCat() );
@@ -183,73 +167,138 @@ public class Report extends ReportLog{
 
     private String getHtmlSteps(Cenario c){
         String htmlSteps="";
-        DateFormat dfs = new SimpleDateFormat("HH:mm:ss");
+
         for( Step s : c.getListStep()){
-            htmlSteps = htmlSteps+
-               "<tr>\n" +
-                   "<td class=\"status "+s.getStatus()+"\" title=\""+s.getStatus()+"\" alt=\""+s.getStatus()+"\">" +
-                       "<i class=\"mdi-action-check-circle\"></i>" +
+            if(s.getImg()==null) {
+                htmlSteps = htmlSteps +
+                 "<tr>\n" +
+                   "<td class=\"status " + s.getStatus() + "\" title=\"" + s.getStatus() + "\" alt=\"" + s.getStatus() + "\">" +
+                      "<i class=\"mdi-action-check-circle\"></i>" +
                     "</td>\n" +
-                   "<td class=\"timestamp\">"+dfs.format( s.getInicio() )+"</td>\n" +
-                   "<td class=\"step-details\">"+s.getNome()+"</td>\n" +
-               "</tr>\n";
+                   "<td class=\"timestamp\">" + dfs.format( s.getInicio() ) + "</td>\n" +
+                   "<td class=\"step-details\">" + s.getNome() + "</td>\n" +
+                "</tr>\n";
+            }else {
+                htmlSteps = htmlSteps +
+                        "<tr>\n" +
+                            "<td class=\"status " + s.getStatus() + "\" title=\"" + s.getStatus() + "\" alt=\"" + s.getStatus() + "\">" +
+                                "<i class=\"mdi-action-check-circle\"></i>" +
+                            "</td>\n" +
+                            "<td class=\"timestamp\">" + dfs.format( s.getInicio() ) + "</td>\n" +
+                            "<td class=\"step-details\">"+
+                                "<a href=\"data:image/png;base64, "+s.getImg()+"\" data-featherlight=\"image\">"+
+                                    "<img class=\"report-img\" src=\"data:image/png;base64, "+s.getImg()+"\">"+
+                                "</a>"+
+                            "</td>\n" +
+                        "</tr>\n";
+            }
         }
         return htmlSteps;
     }
 
-
     private String getHtmlAllCat(){
         String htmlCat ="";
+        List<Categoria> listCategorias= new ArrayList<Categoria>();
         for(Funcionalidade f : getListFuncionalidade()) {
             for ( Categoria cat : f.getListCategoria() ) {
-
-                htmlCat = htmlCat+
-                       " <li class=\"category-item displayed active\">\n" +
-                       "                                <div class=\"cat-head\">\n" +
-                       "                                    <span class=\"category-name\">"+cat.getNome()+"</span>\n" +
-                       "                                </div>\n" +
-                       "                                <!-- se tiver fail, pass ou other-->\n" +
-                       "                                <div class=\"category-status-counts\">\n" +
-                       "                                    <span class=\"fail label dot\">Fail: $failCategoryCount</span>\n" +
-                       "                                </div>\n" +
-                       "                                <div class=\"cat-body\">\n" +
-                       "                                    <div class=\"category-status-counts\">\n" +
-                       "                                        <div class=\"button-group\">\n" +
-                       "                                            <a href=\"#!\" class=\"pass label filter\">Pass <span class=\"icon\">$totalPass</span></a>\n" +
-                       "                                            <a href=\"#!\" class=\"fail label filter\">Fail <span class=\"icon\">$totalFail</span></a>\n" +
-                       "                                            <a href=\"#!\" class=\"other label filter\">Others <span class=\"icon\">$totalOther</span></a>\n" +
-                       "                                        </div>\n" +
-                       "                                    </div>\n" +
-                       "                                    <div class=\"cat-tests\">\n" +
-                       "                                        <table class=\"bordered\">\n" +
-                       "                                            <thead>\n" +
-                       "                                            <tr>\n" +
-                       "                                                <th>RunDate</th>\n" +
-                       "                                                <th>Test Name</th>\n" +
-                       "                                                <th>Status</th>\n" +
-                       "                                            </tr>\n" +
-                       "                                            </thead>\n" +
-                       "                                            <tbody>\n" +
-                       "                                            <tr class=\"fail\">\n" +
-                       "                                                <td>$featureStart</td>\n" +
-                       "                                                <td><span class=\"category-link linked\">$featureName</span></td>\n" +
-                       "                                                <td><div class=\"status label capitalize fail\">$featureStatus</div></td>\n" +
-                       "                                            </tr>\n" +
-                       "                                            </tbody><tbody>\n" +
-                       "                                        </tbody></table>\n" +
-                       "                                    </div>\n" +
-                       "                                </div>\n" +
-                       "                            </li>";
-            }
-            for(Cenario c : f.getCenarios()){
-                for(Categoria cat : c.getListCategoria()){
-                    htmlCat = htmlCat + "<span class=\"category-name\">" + cat.getNome() + "</span>\n";
+                if(!listCategorias.contains(cat)){
+                    htmlCat = htmlCat+
+                            "<li class=\"category-item displayed active\">\n" +
+                                "<div class=\"cat-head\">\n" +
+                                    "<span class=\"category-name\">"+cat.getNome()+"</span>\n" +
+                                "</div>\n" +
+                                getCatCounts(cat)+
+                            "</li>";
+                    listCategorias.add(cat);
                 }
+
             }
         }
         return htmlCat;
     }
 
+    private String getCatCounts(Categoria c){
+        String basePin ="";
+        String baseNums = "";
+        Integer pass=0;
+        Integer fail=0;
+        Integer other=0;
+
+        String pinList ="";
+        for(Funcionalidade f : getListFuncionalidade()){
+            for(Categoria cat : f.getListCategoria()){
+                if(cat.equals( c )){
+                    if(f.getStatus().equals( LogStatus.PASS )){
+                        pass=pass+1;
+                        if(!pinList.contains( "pass" ))
+                            pinList = pinList+"<span class=\"pass label dot\"></span>\n";
+                    }
+                    if(f.getStatus().equals( LogStatus.FAIL )){
+                        fail=fail+1;
+                        if(!pinList.contains( "fail" ))
+                            pinList = pinList+"<span class=\"fail label dot\"></span>\n";
+                    }
+                    if(!f.getStatus().equals( LogStatus.PASS ) && !f.getStatus().equals( LogStatus.FAIL )){
+                        other=other+1;
+                        if(!pinList.contains( "other" ))
+                            pinList = pinList+"<span class=\"other label dot\"></span>\n";
+                    }
+                }
+            }
+        }
+        basePin = "<div class=\"category-status-counts\">\n" +pinList+"\n</div>\n";
+        baseNums = "<div class=\"cat-body\">\n" +
+                        "<div class=\"category-status-counts\">\n" +
+                            "<div class=\"button-group\">\n" +
+                                "<a href=\"#!\" class=\"pass label filter\">Pass <span class=\"icon\">"+pass+"</span></a>\n" +
+                                "<a href=\"#!\" class=\"fail label filter\">Fail <span class=\"icon\">"+fail+"</span></a>\n" +
+                                "<a href=\"#!\" class=\"other label filter\">Others <span class=\"icon\">"+other+"</span></a>\n"+
+                            "</div>\n" +
+                        "</div>\n"+
+                        "<div class=\"cat-tests\">\n" +
+                            "<table class=\"bordered\">\n" +
+                                "<thead>\n" +
+                                    "<tr>\n" +
+                                        "<th>RunDate</th>\n" +
+                                        "<th>Test Name</th>\n" +
+                                        "<th>Status</th>\n" +
+                                    "</tr>\n" +
+                                "</thead>\n" +
+                                "<tbody>\n" +
+                                    getFuncPerCat( c )+
+                                "</tbody>" +
+                                "<tbody>\n" +
+                                "</tbody>" +
+                            "</table>\n" +
+                        "</div>\n" +
+                    "</div>\n";
+
+        return basePin+baseNums;
+    }
+
+    private String getFuncPerCat(Categoria c) {
+        String htmlFuncCat = "";
+            for(Funcionalidade f : getListFuncionalidade()){
+                for(Categoria cat : f.getListCategoria()){
+                    if(cat.equals( c )){
+                        htmlFuncCat = htmlFuncCat+
+                                "<tr class=\""+f.getStatus()+"\">\n" +
+                                    "<td>"+dfs.format( f.getInicio())+"</td>\n" +
+                                    "<td>" +
+                                        "<span class=\"category-link linked\">"+f.getNome()+"</span>" +
+                                    "</td>\n" +
+                                    "<td>" +
+                                        "<div class=\"status label capitalize "+f.getStatus()+"\">"+f.getStatus()+"</div>" +
+                                    "</td>\n" +
+                                "</tr>\n" ;
+                    }
+                }
+            }
+
+
+
+        return htmlFuncCat;
+    }
 
     private String getDuracao(long duracao) {
         if (duracao < 0) {

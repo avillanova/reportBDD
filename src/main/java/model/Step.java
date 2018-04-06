@@ -10,7 +10,11 @@ public class Step extends Test{
         setInicio( new Date( ) );
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setImg(String img64) {
+        this.img = img64;
+    }
+
+    public String getImg(){
+        return img;
     }
 }
