@@ -261,7 +261,7 @@ $('#cat-details-wrapper, #exception-details-wrapper').click(function(evt) {
 
     if (t.is('.exception-link') || t.is('.category-link')) {
         var id = t.attr('extentid');
-        findTestByNameId(t.text().trim(), id);
+        //findTestByNameId(t.text().trim(), id);
     }
 
     if (t.is('.filter, .icon')) {
@@ -387,6 +387,7 @@ $('#test-analysis').click(
             }
         ).click();
     }
+
 );
 
 /* clicking the category tag will automatically filter tests by category */
@@ -526,19 +527,6 @@ function formatDt(d) {
 		('00' + d.getSeconds()).slice(-2);
 }
 
-/* finds test by its name and extentId  [UTIL] */
-function findTestByNameId(name, id) {
-	$('.test').each(function() {
-		var t = $(this);
-
-		if (t.find('.test-name').text().trim() == name && t.attr('extentid') == id) {
-			$('.analysis > .test-view').click();
-
-			t.click();
-			return;
-		}
-	});
-}
 
 /* refresh and redraw charts [DASHBOARD] */
 function redrawCharts() {
@@ -552,10 +540,12 @@ function redrawCharts() {
 		return;
 	}
 
+
 	testChart.segments[0].value = passedFunc;
 	testChart.segments[1].value = failedFunc;
 	testChart.segments[2].value = skippedFunc;
 	testChart.segments[3].value = unknownFunc;
+
 	stepChart.segments[0].value = passedCen;
 	stepChart.segments[1].value = infoCen;
 	stepChart.segments[2].value = failedCen;
@@ -616,6 +606,9 @@ var options = {
 	segmentShowStroke : false,
 	percentageInnerCutout : 55,
 	animationSteps : 1,
+	responsive: false,
+	innerRadius: 90,
+	outerRadius: 500,
 	legendTemplate : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++) {%><li><%if(segments[i].label && segments[i].value){%><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%=segments[i].label%><%}%></li><%}%></ul>'
 };
 
@@ -628,10 +621,11 @@ function testsChart() {
 		{ value: unknownFunc, color: '#222', highlight: '#444', label: 'Unknown' }
 	];
 
-	var ctx = $('#test-analysis').get(0).getContext('2d');
-	testChart = new Chart(ctx).Doughnut(data, options);
-	drawLegend(testChart, 'test-analysis');
 
+     var ctx = $('#test-analysis').get(0).getContext('2d');
+     testChart = new Chart(ctx).Doughnut(data, options);
+     testChart.render();
+     drawLegend(testChart, 'test-analysis');
 }
 
 /* steps view chart [DASHBOARD] */
@@ -646,6 +640,7 @@ function stepsChart() {
 
 	var ctx = $('#step-analysis').get(0).getContext('2d');
 	stepChart = new Chart(ctx).Doughnut(data, options);
+    stepChart.render();
 	drawLegend(stepChart, 'step-analysis');
 }
 
@@ -672,5 +667,6 @@ function drawLegend(chart, id) {
 	$('#' + id).after(legendHolder.firstChild);
 }
 
-testsChart(); stepsChart();
+testsChart();
+stepsChart();
 $('ul.doughnut-legend').addClass('right');
