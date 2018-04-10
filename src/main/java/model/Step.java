@@ -8,6 +8,7 @@ public class Step extends Test{
     public Step(String step){
         setNome( step);
         setInicio( new Date( ) );
+        System.out.println( "Step: " + step  );
     }
 
     public void setImg(String img64) {

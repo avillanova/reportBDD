@@ -133,6 +133,7 @@ public class FuncionalidadeTest {
     @After
     public void after() throws IOException {
         report.flush();
+
     }
 
 

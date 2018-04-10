@@ -11,7 +11,8 @@ public class Funcionalidade extends Test{
     public Funcionalidade(String funcionalidade){
         setNome( funcionalidade);
         setInicio( new Date(System.currentTimeMillis()));
-        Report.addFuncionalidade( this );
+        //Report.addFuncionalidade( this );
+        System.out.println( "Funcionalidade: "+funcionalidade );
     }
 
 
@@ -21,5 +22,8 @@ public class Funcionalidade extends Test{
 
     public void addCenario(Cenario cenario) {
         listCenario.add(cenario);
+        for(Categoria c : cenario.getListCategoria()){
+            this.addCategorias( c.getNome() );
+        }
     }
 }

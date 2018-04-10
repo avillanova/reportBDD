@@ -1,0 +1,11 @@
+model\Categoria.class
+model\LogStatus.class
+model\Test.class
+report\Report.class
+model\Cenario.class
+model\LogPriority.class
+model\Step.class
+model\LogPriority$1.class
+model\LogStatus$1.class
+model\Funcionalidade.class
+model\ReportLog.class

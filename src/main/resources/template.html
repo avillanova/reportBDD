@@ -4,7 +4,7 @@
     <meta name="robots" content="noodp, noydir">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        SISTEMA
+        $reportName
     </title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet" type="text/css">
     <link href="https://cdn.rawgit.com/anshooarora/extentreports/6032d73243ba4fe4fb8769eb9c315d4fdf16fe68/cdn/extent.css" type="text/css" rel="stylesheet">
@@ -16,7 +16,7 @@
 <nav>
     <div class="logo-container blue darken-2">
         <a class="logo-content" href="#">
-            <span>SISTEMA</span>
+            <span>$reportName</span>
         </a>
         <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only">
             <i class="mdi-navigation-apps">        </i></a>
@@ -41,16 +41,16 @@
             </a>
         </li>
     </ul>
-    <span class="report-name"></span><span class="report-headline">Sprint Num</span>
+    <span class="report-name"></span><span class="report-headline">$reportDescription</span>
     <ul class="right hide-on-med-and-down nav-right">
         <li class="theme-selector" alt="Click to toggle dark theme. To enable by default, use js configuration $(&quot;body&quot;).addClass(&quot;dark&quot;);" title="Click to toggle dark theme. To enable by default, use js configuration $(&quot;body&quot;).addClass(&quot;dark&quot;);">
             <i class="mdi-hardware-desktop-windows"></i>
         </li>
         <li>
-            <span class="suite-started-time">10/04/2018 17:45:52</span>
+            <span class="suite-started-time">$reportDate</span>
         </li>
         <li>
-            <span>1.0-SNAPSHOT</span>
+            <span>$version</span>
         </li>
     </ul>
 </nav>
@@ -77,19 +77,19 @@
             <div class="col s12 m6 l4 fh">
                 <div class="card suite-total-time-current">
                     <span class="panel-name">Total Time Taken</span>
-                    <span class="suite-total-time-current-value panel-lead">0h 0m 0s+97ms</span>
+                    <span class="suite-total-time-current-value panel-lead">$duracaoTotal</span>
                 </div>
             </div>
             <div class="col l2 m4 s6 suite-start-time">
                 <div class="card accent green-accent">
                     <span class="panel-name">Start</span>
-                    <span class="panel-lead suite-started-time">10/04/2018 17:45:52</span>
+                    <span class="panel-lead suite-started-time">$dateStart</span>
                 </div>
             </div>
             <div class="col l2 m4 s6 suite-end-time">
                 <div class="card accent pink-accent">
                     <span class="panel-name">End</span>
-                    <span class="panel-lead suite-ended-time">10/04/2018 17:45:52</span>
+                    <span class="panel-lead suite-ended-time">$dateEnd</span>
                 </div>
             </div>
         </div>
@@ -161,19 +161,19 @@
                         <tbody>
                         <tr>
                             <td>User Name</td>
-                            <td>adm</td>
+                            <td>$userName</td>
                         </tr>
                         <tr>
                             <td>OS</td>
-                            <td>Windows 10</td>
+                            <td>$OS</td>
                         </tr>
                         <tr>
                             <td>Browser</td>
-                            <td>Chrome</td>
+                            <td>$browser</td>
                         </tr>
                         <tr>
                             <td>Host Name</td>
-                            <td>dealnote33</td>
+                            <td>$hostName</td>
                         </tr>
                         </tbody>
                     </table>
@@ -191,7 +191,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            
+                            $categoriesList
                         </tbody>
                     </table>
                 </div>
@@ -225,7 +225,7 @@
                             <i class="mdi-maps-local-offer"></i>
                         </a>
                         <ul id="category-toggle" class="dropdown-content">
-                            
+                            $categories[i]
                             <li class="divider"></li>
                             <li class="clear"><a href="#!">Clear Filters</a></li>
                         </ul>
@@ -274,7 +274,7 @@
                 <div class="card-panel no-padding-h no-padding-v no-margin-v">
                     <div class="wrapper">
                         <ul id="test-collection" class="test-collection">
-                            
+                            $testes
                         </ul>
                     </div>
                 </div>
@@ -320,7 +320,7 @@
                 <div class="card-panel no-padding-h no-padding-v">
                     <div class="wrapper">
                         <ul id="cat-collection" class="cat-collection">
-                            
+                            $AllCat
                         </ul>
                     </div>
                 </div>
