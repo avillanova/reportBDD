@@ -1,7 +1,5 @@
 package model;
 
-import javafx.util.Duration;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +12,7 @@ public class Test {
     private Date fim;
     private long duracao;
     private String prioridade;
+    private String severidade;
     private String descricao;
     private List<Categoria> listCategoria = new ArrayList<Categoria>();
 
@@ -98,5 +97,14 @@ public class Test {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+
+    public String getSeveridade() {
+        return severidade;
+    }
+
+    public void setSeveridade(LogSeverity severidade) {
+        this.severidade = severidade.toString();
     }
 }

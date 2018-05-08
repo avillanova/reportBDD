@@ -11,7 +11,27 @@ public class ReportLog {
     private static List<Funcionalidade> listFuncionalidade = new ArrayList<Funcionalidade>();
 
     public static List<Funcionalidade> getListFuncionalidade() {
+        for(Funcionalidade f : listFuncionalidade){
+            for(Cenario c : f.getCenarios()){
+                for(Step s : c.getListStep()){
+                    if(s.getStatus().equals( LogStatus.FAIL )){
+                        c.setStatus( LogStatus.FAIL );
+                    }
+                }
+                if(c.getStatus() != LogStatus.FAIL){
+                    c.setStatus( LogStatus.PASS );
+                }
+                if(c.getStatus() == LogStatus.FAIL ){
+                    f.setStatus( LogStatus.FAIL );
+                }
+                if(f.getStatus() != LogStatus.FAIL){
+                    f.setStatus( LogStatus.PASS );
+                }
+            }
+        }
+
         return listFuncionalidade;
+
     }
 
     protected static void addFunc(Funcionalidade funcionalidade) {

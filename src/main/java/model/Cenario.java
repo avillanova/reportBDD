@@ -8,7 +8,6 @@ public class Cenario extends Test{
     private List<Step> listStep = new ArrayList<Step>();
 
     public Cenario(String cenario){
-        System.out.println( "Cenario: "+cenario );
         setNome( cenario);
         setInicio( new Date(System.currentTimeMillis()));
     }

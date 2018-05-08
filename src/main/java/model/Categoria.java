@@ -4,7 +4,6 @@ public class Categoria {
     private String nome;
 
     public Categoria(String categoria){
-        System.out.println( "Iniciou a categoria"+categoria );
         nome = categoria;
     }
 

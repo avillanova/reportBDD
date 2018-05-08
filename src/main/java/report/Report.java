@@ -70,7 +70,6 @@ public class Report extends ReportLog{
     }
 
     public static void flush() throws IOException {
-        System.out.println( "iniciando o Flush" );
         dateFinish = new Date();
         String duracao = getDuracao( dateFinish.getTime() - dateCreation.getTime() );
         htmlString = htmlString.replace("$duracaoTotal", duracao);
@@ -92,11 +91,9 @@ public class Report extends ReportLog{
         htmlString = htmlString.replace( "$testes", getBaseTest() );
         htmlString = htmlString.replace( "$AllCat", getHtmlAllCat() );
 
-        System.out.println( "Gravando em "+ src2 );
         File newHtmlFile = new File(src2);
         FileUtils.writeStringToFile(newHtmlFile, htmlString);
-
-        System.out.println( "Gravado" );
+        System.out.println( "Report gravado em "+src2 );
     }
 
     private static String getBaseTest(){
@@ -109,7 +106,7 @@ public class Report extends ReportLog{
                 catTags = catTags+"<span class=\"category text-white\">"+cat.getNome()+"</span>\n";
             }
             htmlBase=htmlBase+
-            "<li class=\"collection-item test displayed "+f.getStatus()+" hasChildren category-assigned "+catFeature+"\">\n"
+            "<li class=\"collection-item test displayed "+f.getStatus()+" "+f.getPrioridade()+" hasChildren category-assigned "+catFeature+"\">\n"
                 +"<div class=\"test-head\">\n"
                     +"<span class=\"test-name\">"+f.getNome()+"</span>\n"
                     +"<span class=\"test-status label right outline capitalize "+f.getStatus()+"\">"+f.getStatus()+"</span>\n"
@@ -144,8 +141,8 @@ public class Report extends ReportLog{
                 listCatCenario=listCatCenario+" "+cat.getNome();
             }
             htmlCenarios=htmlCenarios+
-                 "<li class=\"displayed "+c.getStatus()+" node-1x category-assigned "+listCatCenario+"\">\n" +
-                     "<div class=\"collapsible-header test-node "+c.getStatus()+" category-assigned  "+listCatCenario+"\">\n" +
+                 "<li class=\"displayed "+c.getStatus()+" "+c.getPrioridade()+" node-1x category-assigned "+listCatCenario+"\">\n" +
+                     "<div class=\"collapsible-header test-node "+c.getStatus()+" "+c.getPrioridade()+" category-assigned  "+listCatCenario+"\">\n" +
                          "<div class=\"right test-info\">\n" +
                              "<span title=\"Test started time\" alt=\"Test started time\" class=\"test-started-time label green lighten-2 text-white\">"+df.format( c.getInicio() )+"</span>\n" +
                              "<span title=\"Test ended time\" alt=\"Test ended time\" class=\"test-ended-time label red lighten-2 text-white\">"+df.format( c.getFim() )+"</span>\n" +

@@ -11,8 +11,6 @@ public class Funcionalidade extends Test{
     public Funcionalidade(String funcionalidade){
         setNome( funcionalidade);
         setInicio( new Date(System.currentTimeMillis()));
-        //Report.addFuncionalidade( this );
-        System.out.println( "Funcionalidade: "+funcionalidade );
     }
 
 
